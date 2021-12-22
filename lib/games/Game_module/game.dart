@@ -4,5 +4,7 @@ id
 class Game {
   String? name;
   DateTime? time;
-  Game({this.name, this.time});
+  String? Route;
+
+  Game({this.name, this.time, this.Route});
 }

@@ -12,27 +12,53 @@ class GameList extends StatefulWidget {
 }
 
 class _GameListState extends State<GameList> {
-  DateTime? date;
+  DateTime? dateTime;
   @override
   Widget build(BuildContext context) {
-    Future pickdate() async {
+    Future<DateTime?> pickdate(BuildContext context) async {
       final initialDate = DateTime.now();
       final newDate = await showDatePicker(
         context: context,
-        initialDate: date ?? initialDate,
+        initialDate: dateTime ?? initialDate,
         firstDate: DateTime(initialDate.year - 5),
         lastDate: DateTime(initialDate.year + 5),
       );
-      if (newDate == null) return;
+      if (newDate == null) return null;
+
+      return newDate;
+    }
+
+    Future<TimeOfDay?> pickTime(BuildContext context) async {
+      final initialTime = TimeOfDay(hour: 9, minute: 0);
+      final newTime = await showTimePicker(
+          context: context,
+          initialTime: dateTime != null
+              ? TimeOfDay(hour: dateTime!.hour, minute: dateTime!.minute)
+              : initialTime);
+      if (newTime == null) return null;
+
+      return newTime;
+    }
+
+    Future pickDateTime(BuildContext context) async {
+      final date = await pickdate(context);
+      if (date == null) return;
+      final time = await pickTime(context);
+      if (time == null) return;
       setState(() {
-        date = newDate;
+        dateTime =
+            DateTime(date.year, date.month, date.day, time.hour, time.minute);
       });
     }
 
-    Future pickTime(BuildContext context) async {
-      final initialTime = TimeOfDay(hour: 9, minute: 0);
-      final newTime =
-          await showTimePicker(context: context, initialTime: initialTime);
+    String gethours() {
+      final hours = dateTime!.hour.toString().padLeft(2, '0');
+      return '$hours';
+    }
+
+    String getminutes() {
+      final minutes = dateTime!.minute.toString().padLeft(2, '0');
+      return '$minutes';
     }
 
     return Consumer<GameData>(builder: (context, gamedata, child) {
@@ -40,7 +66,11 @@ class _GameListState extends State<GameList> {
         itemCount: gamedata.gameCount,
         itemBuilder: (context, index) {
           final game = gamedata.games[index];
-          return GameTile(gameTitle: game.name.toString(), onTap: () {});
+          return GameTile(
+              gameTitle: game.name.toString(),
+              onTap: () {
+                pickDateTime(context);
+              });
         },
       );
     });

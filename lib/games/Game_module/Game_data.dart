@@ -5,9 +5,8 @@ import 'game.dart';
 
 class GameData extends ChangeNotifier {
   List<Game> _games = [
-    Game(name: "sss", timeStamp: DateTime.now()),
-    Game(name: "sss", timeStamp: DateTime.now()),
-    Game(name: "sss", timeStamp: DateTime.now()),
+    Game(name: "MathMetical Game", time: DateTime.now()),
+    Game(name: "Memory Game", time: DateTime.now()),
   ];
   UnmodifiableListView<Game> get games {
     return UnmodifiableListView(_games);
