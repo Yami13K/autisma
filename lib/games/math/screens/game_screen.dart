@@ -115,6 +115,17 @@ class _GameScreenState extends State<GameScreen> {
         });
   }
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    setState(() {
+
+      totalTime = 0;
+      ShowMydialog();
+      _timer.cancel();
+    });
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
