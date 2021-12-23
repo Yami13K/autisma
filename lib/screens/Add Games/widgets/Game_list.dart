@@ -12,6 +12,7 @@ class GameList extends StatefulWidget {
 }
 
 class _GameListState extends State<GameList> {
+  GameData? gameData;
   DateTime? dateTime;
   @override
   Widget build(BuildContext context) {
@@ -42,9 +43,9 @@ class _GameListState extends State<GameList> {
 
     Future pickDateTime(BuildContext context) async {
       final date = await pickdate(context);
-      if (date == null) return;
+      if (date == null) return null;
       final time = await pickTime(context);
-      if (time == null) return;
+      if (time == null) return null;
       setState(() {
         dateTime =
             DateTime(date.year, date.month, date.day, time.hour, time.minute);
