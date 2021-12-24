@@ -1,9 +1,8 @@
-import 'package:autisma/games/math/screens/game_screen.dart';
-import 'package:autisma/games/memory_game/screens/memory.dart';
 import 'package:autisma/widgets/RoundedButton.dart';
 import 'package:flutter/material.dart';
-class  IntroScreen extends StatelessWidget {
-  const  IntroScreen({Key? key}) : super(key: key);
+
+class IntroScreen extends StatelessWidget {
+  const IntroScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,6 @@ class  IntroScreen extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   letterSpacing: 1.2),
             ),
-
             Hero(
               tag: 'logoAnimation',
               child: Image.asset(
@@ -36,27 +34,32 @@ class  IntroScreen extends StatelessWidget {
               child: SizedBox(
                 height: 55,
                 width: double.infinity,
-                child: RoundedButton(color: Colors.white,title: 'detection',onpressed: (){
-                  Navigator.of(context).pushNamed(GameScreen.id);
-                },),
-              ),
-
-            ),
-             Padding(
-               padding: const EdgeInsets.symmetric(horizontal: 20),
-               child: SizedBox(
-                  height: 55,
-                  width: double.infinity,
-                  child: RoundedButton(color: Colors.white,title: 'Proceed',onpressed: (){
-                    Navigator.of(context).pushNamed('login');
-                  },),
+                child: RoundedButton(
+                  color: Colors.white,
+                  title: 'detection',
+                  onpressed: () {
+                    Navigator.of(context).pushNamed('mathmetical');
+                  },
                 ),
-             ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SizedBox(
+                height: 55,
+                width: double.infinity,
+                child: RoundedButton(
+                  color: Colors.white,
+                  title: 'Proceed',
+                  onpressed: () {
+                    Navigator.of(context).pushNamed('login');
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-

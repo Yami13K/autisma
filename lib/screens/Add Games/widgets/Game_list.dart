@@ -16,7 +16,7 @@ class _GameListState extends State<GameList> {
   DateTime? dateTime;
   @override
   Widget build(BuildContext context) {
-    Future<DateTime?> pickdate(BuildContext context) async {
+    Future pickdate(BuildContext context) async {
       final initialDate = DateTime.now();
       final newDate = await showDatePicker(
         context: context,
@@ -41,14 +41,15 @@ class _GameListState extends State<GameList> {
       return newTime;
     }
 
-    Future pickDateTime(BuildContext context) async {
+    Future pickDateTime(BuildContext context, String name) async {
       final date = await pickdate(context);
       if (date == null) return null;
       final time = await pickTime(context);
       if (time == null) return null;
       setState(() {
-        dateTime =
-            DateTime(date.year, date.month, date.day, time.hour, time.minute);
+        dateTime = DateTime(date.year, date.month, date.day, time.hour);
+        print(dateTime.toString());
+        print(name);
       });
     }
 
@@ -70,7 +71,10 @@ class _GameListState extends State<GameList> {
           return GameTile(
               gameTitle: game.name.toString(),
               onTap: () {
-                pickDateTime(context);
+                pickDateTime(context, game.name.toString());
+                print(game.name);
+                print(game.time);
+                print(game.Route);
               });
         },
       );

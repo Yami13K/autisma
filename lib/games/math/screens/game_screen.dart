@@ -11,7 +11,7 @@ int _score = 0;
 int _highscore = 0;
 double _value = 0;
 int _falseCounter = 0;
-int _numberofquizes=0;
+int _numberofquizes = 0;
 
 class GameScreen extends StatefulWidget {
   static final id = 'game_screen';
@@ -30,15 +30,15 @@ class _GameScreenState extends State<GameScreen> {
     startGame();
   }
 
-  void startGame()async {
+  void startGame() async {
     _quizBrain.makeQuiz();
     starttimer();
     _value = 1;
     _score = 0;
     _falseCounter = 0;
-    _numberofquizes=1;
-    SharedPreferences preferences=await SharedPreferences.getInstance();
-    _highscore=preferences.getInt("highscore") ?? 0;
+    _numberofquizes = 1;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    _highscore = preferences.getInt("highscore") ?? 0;
   }
 
   void starttimer() {
@@ -51,7 +51,6 @@ class _GameScreenState extends State<GameScreen> {
         });
       } else {
         setState(() {
-
           totalTime = 0;
           ShowMydialog();
           _timer.cancel();
@@ -66,10 +65,8 @@ class _GameScreenState extends State<GameScreen> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20)
-            ),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             backgroundColor: Color(0xff1542bf),
             title: FittedBox(
               child: Text(
@@ -95,7 +92,7 @@ class _GameScreenState extends State<GameScreen> {
                   "Exit",
                   style: TextStyle(fontSize: 18, color: Colors.white60),
                 ),
-                onPressed: (){
+                onPressed: () {
                   int count = 0;
                   Navigator.of(context).popUntil((_) => count++ >= 2);
                 },
@@ -105,7 +102,7 @@ class _GameScreenState extends State<GameScreen> {
                   "Play Again",
                   style: TextStyle(fontSize: 18, color: Colors.white60),
                 ),
-                onPressed: (){
+                onPressed: () {
                   startGame();
                   Navigator.of(context).pop();
                 },
@@ -114,17 +111,18 @@ class _GameScreenState extends State<GameScreen> {
           );
         });
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
     setState(() {
-
       totalTime = 0;
       ShowMydialog();
       _timer.cancel();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -182,9 +180,9 @@ class ReusableOutlineButton extends StatelessWidget {
     if (userChoice == _quizBrain.answer) {
       _score++;
       _value >= 0.89 ? _value = 1 : _value += 0.1;
-      if (_highscore < _score){
+      if (_highscore < _score) {
         _highscore = _score;
-        SharedPreferences preferences=await SharedPreferences.getInstance();
+        SharedPreferences preferences = await SharedPreferences.getInstance();
         preferences.setInt("highscore", _highscore);
       }
     } else

@@ -1,10 +1,9 @@
 import 'package:autisma/games/math/screens/game_screen.dart';
-import 'package:autisma/games/math/screens/welcome_screen.dart';
+import 'package:autisma/games/memory_game/screens/memory.dart';
 import 'package:autisma/screens/Login.dart';
 import 'package:autisma/screens/Signup.dart';
 import 'package:autisma/screens/intro_screen.dart';
 import 'package:flutter/material.dart';
-
 
 void main() {
   runApp(MyApp());
@@ -40,12 +39,11 @@ class MyApp extends StatelessWidget {
       home: IntroScreen(),
       routes: {
         'intro': (_) => IntroScreen(),
-        'login':(_) => LoginScreen(),
-        'register':(_)=>RegistrationScreen(),
-        WelcomeScreen.id:(_)=>WelcomeScreen(),
-        GameScreen.id:(_)=>GameScreen()
+        'login': (_) => LoginScreen(),
+        'register': (_) => RegistrationScreen(),
+        'memory': (_) => Home(),
+        'mathmetical': (_) => GameScreen()
       },
     );
   }
-  
 }
