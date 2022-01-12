@@ -11,9 +11,10 @@ class RegistrationScreen  extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  
-  late String email;
-  late String password;
+  late String username="";
+  late String email="";
+  late String password="";
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,29 +63,71 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ],
             ),
             SizedBox(height: 20,),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Enter your email',
-                hintText: 'ex: test@gmail.com',
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Enter your username',
+                        hintText: 'UserName',
+                      ),
+                      onChanged: (value) {
+                        username = value;
+                      },
+                      validator: (value) {
+                        if (value!.length < 4) {
+                          return 'Enter at least 4 characters';
+                        } else {
+                          return null;
+                        }
+                      }
+                  ),
+                  SizedBox(height: 20,),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Enter your email',
+                      hintText: 'Email',
+                    ),
+                    onChanged: (value) {
+                      email = value;
+                    },
+                    validator: (value) {
+                      final pattern = r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)';
+                      final regExp = RegExp(pattern);
+
+                      if (value!.isEmpty) {
+                        return 'Enter an email';
+                      } else if (!regExp.hasMatch(value)) {
+                        return 'Enter a valid email';
+                      } else {
+                        return null;
+                      }
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    onSaved: (value) => setState(() => email = value!),
+                  ),
+                  SizedBox(height: 10),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Enter your password',
+                    ),
+                    obscureText: true,
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    validator: (value) {
+                      if (value!.length < 7) {
+                        return 'Password must be at least 7 characters long';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (value) => setState(() => password = value!),
+                    keyboardType: TextInputType.visiblePassword,
+                  ),
+                ],
               ),
-              onChanged: (value) {
-                email = value;
-              },
-              validator: (value) =>
-              value!.isEmpty ? 'You must enter a valid email' : null,
-            ),
-            SizedBox(height: 10),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Enter your password',
-              ),
-              obscureText: true,
-              onChanged: (value) {
-                password = value;
-              },
-              validator: (value) => value!.length <= 6
-                  ? 'Your password must be larger than 6 characters'
-                  : null,
             ),
             SizedBox(
               height: 24.0,
@@ -96,6 +139,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 title: 'Register',
                 color: Colors.blueAccent,
                 onpressed : ()  {
+                  final isValid = _formKey.currentState!.validate();
                 },
               ),
             ),

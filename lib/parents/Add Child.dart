@@ -1,17 +1,34 @@
-import 'package:autisma/parents/Add%20Child.dart';
-import 'package:flutter/material.dart';
 import 'package:autisma/widgets/RoundedButton.dart';
+import 'package:flutter/material.dart';
 
+import 'Navbar.dart';
 
-class LoginScreen  extends StatefulWidget {
-  const LoginScreen ({Key? key}) : super(key: key);
+class dice extends StatelessWidget {
 
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  Widget build(BuildContext context) {
+    return
+      Scaffold(
+        drawer: NavDrawer(),
+        backgroundColor: Colors.red,
+        appBar: AppBar(
+          title: Text('Add Child'),
+          centerTitle: true,
+          backgroundColor: Colors.red,
+        ),
+        body: AddChild(),
+      );
+  }
+}
+class AddChild extends StatefulWidget {
+
+
+  @override
+  _AddChildState createState() => _AddChildState();
 }
 
-class _RegistrationScreenState extends State<LoginScreen> {
-  late String username="";
+class _AddChildState extends State<AddChild> {
+  late String child_name="";
   late String password="";
   final _formKey = GlobalKey<FormState>();
   @override
@@ -30,7 +47,7 @@ class _RegistrationScreenState extends State<LoginScreen> {
                   height: MediaQuery.of(context).size.height * 0.5,
 
                   decoration: BoxDecoration(
-                    color: Colors.lightBlueAccent,
+                    color: Colors.teal,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(50),
                       bottomRight: Radius.circular(50),
@@ -42,7 +59,7 @@ class _RegistrationScreenState extends State<LoginScreen> {
                     children: [
                       SizedBox(height: 65),
                       Text(
-                        'Hello!',
+                        'Add Child',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 32,
@@ -52,7 +69,7 @@ class _RegistrationScreenState extends State<LoginScreen> {
                       Hero(
                         tag: 'logo',
                         child: Image.asset(
-                          'images/logo.png',
+                          'images/autism.png',
                           height: 250,
                         ),
                       ),
@@ -61,19 +78,19 @@ class _RegistrationScreenState extends State<LoginScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 40,),
             Form(
               key: _formKey,
               child: Column(
                 children: [
                   TextFormField(
                       maxLength: 30,
-                      onSaved: (value) => setState(() => username = value!),
+                      onSaved: (value) => setState(() => child_name = value!),
                       decoration: InputDecoration(
                         labelText: 'Enter Child Name',
                       ),
                       onChanged: (value) {
-                        username = value;
+                        child_name = value;
                       },
                       validator: (value) {
                         if (value!.length < 4) {
@@ -82,6 +99,7 @@ class _RegistrationScreenState extends State<LoginScreen> {
                           return null;
                         }
                       }
+
                   ),
                   SizedBox(height: 10),
                   TextFormField(
@@ -106,7 +124,6 @@ class _RegistrationScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-
             SizedBox(
               height: 24.0,
             ),
@@ -114,29 +131,22 @@ class _RegistrationScreenState extends State<LoginScreen> {
               height: 55,
               width: double.infinity,
               child: RoundedButton(
-                title: 'Login',
-                color: Colors.blueAccent,
+                title: 'Add Child',
+                color: Colors.teal,
                 onpressed : ()  {
                   final isValid = _formKey.currentState!.validate();
-                  if (!isValid) {
+                  if (!isValid)
                     _formKey.currentState!.save();
-                  }
                   else
-                  Navigator.push(context,MaterialPageRoute(builder: (_)=>AddChild()));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Child Registered"),
+                    ));
                 },
               ),
             ),
-            SizedBox(height: 10,),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, 'register');
-              },
-              child: new Text("Don\'t Have An Account?",style: TextStyle(fontSize: 18, color: Colors.black54,),textAlign: TextAlign.center,),
-            )
           ],
         ),
       ),
     );
   }
 }
-

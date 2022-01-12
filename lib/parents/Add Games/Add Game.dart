@@ -1,7 +1,9 @@
+import 'package:autisma/parents/Navbar.dart';
 import 'package:autisma/games/Game_module/Game_data.dart';
-import 'package:autisma/screens/Add%20Games/widgets/Game_list.dart';
+import 'package:autisma/parents/Add%20Games/widgets/Game_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 
 class Games extends StatefulWidget {
   const Games({Key? key}) : super(key: key);
@@ -14,6 +16,7 @@ class _GamesState extends State<Games> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
         title: Text("Schedule Games"),
         backgroundColor: Colors.lightBlueAccent,
@@ -25,7 +28,7 @@ class _GamesState extends State<Games> {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               decoration: BoxDecoration(
-                color: Colors.white,
+
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),
                   topRight: Radius.circular(20.0),

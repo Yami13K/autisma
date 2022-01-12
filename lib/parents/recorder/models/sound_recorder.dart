@@ -31,7 +31,6 @@ class SoundRecorder{
     _recorder=FlutterSoundRecorder();
     final status=await Permission.microphone.request();
     if(status != PermissionStatus.granted){
-      print("sex");
       throw RecordingPermissionException('Microphone Permission Required');
     }
     await _recorder!.openAudioSession();

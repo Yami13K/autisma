@@ -1,8 +1,12 @@
 import 'package:autisma/games/math/screens/game_screen.dart';
 import 'package:autisma/games/memory_game/screens/memory.dart';
+import 'package:autisma/parents/Add%20Games/Add%20Game.dart';
+import 'package:autisma/parents/Score.dart';
+import 'package:autisma/parents/Add%20Child.dart';
 import 'package:autisma/screens/Login.dart';
 import 'package:autisma/screens/Signup.dart';
 import 'package:autisma/screens/intro_screen.dart';
+import 'package:autisma/upload.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,7 +14,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,7 +46,11 @@ class MyApp extends StatelessWidget {
         'login': (_) => LoginScreen(),
         'register': (_) => RegistrationScreen(),
         'memory': (_) => Home(),
-        'mathmetical': (_) => GameScreen()
+        'mathmetical': (_) => GameScreen(),
+        'add_child':(_)=>AddChild(),
+        'add_games':(_)=>Games(),
+        'score':(_)=>Score(),
+        'upload':(_)=>Upload(),
       },
     );
   }

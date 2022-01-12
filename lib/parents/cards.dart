@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/Add Child.dart';
+import 'Add Child.dart';
 
 
 class ImageSplashCard extends StatelessWidget {
