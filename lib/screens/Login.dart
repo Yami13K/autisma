@@ -70,7 +70,7 @@ class _RegistrationScreenState extends State<LoginScreen> {
                       maxLength: 30,
                       onSaved: (value) => setState(() => username = value!),
                       decoration: InputDecoration(
-                        labelText: 'Enter Child Name',
+                        labelText: 'Enter Your Name',
                       ),
                       onChanged: (value) {
                         username = value;

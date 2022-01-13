@@ -34,6 +34,12 @@ class _AddChildState extends State<AddChild> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavDrawer(),
+      appBar: AppBar(
+        title: Text('Add Child'),
+        centerTitle: true,
+        backgroundColor: Colors.lightBlueAccent,
+      ),
       backgroundColor: Colors.white,
       body:
       SingleChildScrollView(
