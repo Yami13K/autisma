@@ -1,35 +1,49 @@
 import 'package:autisma/widgets/RoundedButton.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Navbar.dart';
 
-class dice extends StatelessWidget {
+String result = "";
 
+class dice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return
-      Scaffold(
-        drawer: NavDrawer(),
-        backgroundColor: Colors.red,
-        appBar: AppBar(
-          title: Text('Add Child'),
-          centerTitle: true,
-          backgroundColor: Colors.red,
-        ),
-        body: AddChild(),
-      );
+    return Scaffold(
+      drawer: NavDrawer(),
+      appBar: AppBar(
+        title: Text('Add Child'),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
+      ),
+      body: AddChild(),
+    );
   }
 }
+
 class AddChild extends StatefulWidget {
-
-
   @override
   _AddChildState createState() => _AddChildState();
 }
 
 class _AddChildState extends State<AddChild> {
-  late String child_name="";
-  late String password="";
+  late TextEditingController myController;
+  @override
+  void initState() {
+    super.initState();
+    loadResult();
+  }
+
+  loadResult() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      result = (prefs.getString("result"))!;
+      myController = TextEditingController()..text = result;
+    });
+  }
+
+  late String child_name = "";
+  late String password = "";
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -41,8 +55,7 @@ class _AddChildState extends State<AddChild> {
         backgroundColor: Colors.lightBlueAccent,
       ),
       backgroundColor: Colors.white,
-      body:
-      SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -51,9 +64,8 @@ class _AddChildState extends State<AddChild> {
               children: [
                 Container(
                   height: MediaQuery.of(context).size.height * 0.5,
-
                   decoration: BoxDecoration(
-                    color: Colors.teal,
+                    color: Colors.lightBlue,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(50),
                       bottomRight: Radius.circular(50),
@@ -84,7 +96,9 @@ class _AddChildState extends State<AddChild> {
                 ),
               ],
             ),
-            SizedBox(height: 40,),
+            SizedBox(
+              height: 40,
+            ),
             Form(
               key: _formKey,
               child: Column(
@@ -104,8 +118,12 @@ class _AddChildState extends State<AddChild> {
                         } else {
                           return null;
                         }
-                      }
-
+                      }),
+                  TextFormField(
+                    maxLength: 30,
+                    enabled: false,
+                    onSaved: (value) => setState(() => child_name = value!),
+                    controller: myController,
                   ),
                   SizedBox(height: 10),
                   TextFormField(
@@ -116,7 +134,6 @@ class _AddChildState extends State<AddChild> {
                     onChanged: (value) {
                       password = value;
                     },
-
                     validator: (value) {
                       if (value!.length < 7) {
                         return 'Password must be at least 7 characters long';
@@ -138,8 +155,8 @@ class _AddChildState extends State<AddChild> {
               width: double.infinity,
               child: RoundedButton(
                 title: 'Add Child',
-                color: Colors.teal,
-                onpressed : ()  {
+                color: Colors.lightBlue,
+                onpressed: () {
                   final isValid = _formKey.currentState!.validate();
                   if (!isValid)
                     _formKey.currentState!.save();

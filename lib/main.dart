@@ -6,8 +6,9 @@ import 'package:autisma/parents/Add%20Child.dart';
 import 'package:autisma/screens/Login.dart';
 import 'package:autisma/screens/Signup.dart';
 import 'package:autisma/screens/intro_screen.dart';
-import 'package:autisma/upload.dart';
+import 'package:autisma/parents/upload.dart';
 import 'package:flutter/material.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+
         visualDensity: VisualDensity.adaptivePlatformDensity,
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
