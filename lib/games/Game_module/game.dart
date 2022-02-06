@@ -3,8 +3,8 @@ id
  */
 class Game {
   String? name;
-  String? Route;
-  DateTime? date;
+  String? route;
+  String? image;
 
-  Game({this.name, this.Route,this.date});
+  Game({this.name, this.route, this.image});
 }

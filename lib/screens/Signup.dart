@@ -1,26 +1,30 @@
 import 'package:autisma/widgets/RoundedButton.dart';
 import 'package:flutter/material.dart';
 
-
-
-class RegistrationScreen  extends StatefulWidget {
-  const RegistrationScreen ({Key? key}) : super(key: key);
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({Key? key}) : super(key: key);
 
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  late String username="";
-  late String email="";
-  late String password="";
+  bool _isHidden = true;
+  void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
+
+  late String username = "";
+  late String email = "";
+  late String password = "";
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body:
-      SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,7 +35,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   height: MediaQuery.of(context).size.height * 0.5,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Colors.lightBlueAccent,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(50),
                       bottomRight: Radius.circular(50),
@@ -42,18 +46,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   child: Column(
                     children: [
                       SizedBox(height: 65),
-                      Text(
-                        'Hello!',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 1.2),
-                      ),
                       Hero(
                         tag: 'logo',
                         child: Image.asset(
-                          'images/logo.png',
+                          'images/login.png',
                           height: 250,
                         ),
                       ),
@@ -62,7 +58,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Form(
               key: _formKey,
               child: Column(
@@ -81,9 +79,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         } else {
                           return null;
                         }
-                      }
+                      }),
+                  SizedBox(
+                    height: 20,
                   ),
-                  SizedBox(height: 20,),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Enter your email',
@@ -93,7 +92,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       email = value;
                     },
                     validator: (value) {
-                      final pattern = r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)';
+                      final pattern =
+                          r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)';
                       final regExp = RegExp(pattern);
 
                       if (value!.isEmpty) {
@@ -111,8 +111,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Enter your password',
+                      suffix: InkWell(
+                        onTap: _togglePasswordView,
+                        child: Icon(
+                          _isHidden ? Icons.visibility : Icons.visibility_off,
+                        ),
+                      ),
                     ),
-                    obscureText: true,
+                    obscureText: _isHidden,
                     onChanged: (value) {
                       password = value;
                     },
@@ -138,18 +144,39 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               child: RoundedButton(
                 title: 'Register',
                 color: Colors.blueAccent,
-                onpressed : ()  {
+                onpressed: () {
                   final isValid = _formKey.currentState!.validate();
                 },
               ),
             ),
-            SizedBox(height: 10,),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, 'login');
-              },
-              child: new Text("Already Have An Account? Sign In here",
-                style: TextStyle(fontSize: 18, color: Colors.black54),textAlign: TextAlign.center,),
+            SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Already Have An Account?",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black54,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                GestureDetector(
+                  child: Text(
+                    'login heare',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.indigoAccent,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, 'login');
+                  },
+                ),
+              ],
             )
           ],
         ),
@@ -157,4 +184,3 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 }
-

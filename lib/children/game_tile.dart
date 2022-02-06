@@ -1,29 +1,17 @@
 import 'package:flutter/material.dart';
 
-class GameTile extends StatelessWidget {
+class ChildGame extends StatelessWidget {
   final String gameTitle;
   final VoidCallback onTap;
-  final VoidCallback submit;
   final String image;
-  GameTile(
-      {required this.gameTitle,
-      required this.onTap,
-      required this.image,
-      required this.submit});
+  ChildGame({
+    required this.gameTitle,
+    required this.onTap,
+    required this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // return ListTile(
-    //   title: Text(gameTitle),
-    //   trailing: IconButton(
-    //     icon: const Icon(
-    //       Icons.calendar_today_rounded,
-    //       color: Colors.lightBlueAccent,
-    //     ),
-    //     onPressed: onTap,
-    //   ),
-    //   leading: Image.asset(image),
-    // );
     return Card(
       color: Colors.blue,
       shadowColor: Colors.red,
@@ -51,34 +39,29 @@ class GameTile extends StatelessWidget {
               height: 240,
               fit: BoxFit.cover,
             ),
+            SizedBox(
+              height: 20,
+            ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton.icon(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.lightBlueAccent),
-                  ),
-                  icon: Icon(
-                    Icons.calendar_today,
-                    size: 24.0,
-                    color: Colors.black,
-                  ),
-                  label: Text('Choose Date'),
-                  onPressed: onTap,
-                ),
-                ElevatedButton.icon(
+                SizedBox(
+                  width: 200.0,
+                  height: 50.0,
+                  child: ElevatedButton.icon(
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.lightBlueAccent),
                     ),
                     icon: Icon(
-                      Icons.assignment_turned_in,
-                      color: Colors.black,
+                      Icons.gamepad,
                       size: 24.0,
+                      color: Colors.black,
                     ),
-                    label: Text('Submit Time'),
-                    onPressed: submit),
+                    label: Text('Play'),
+                    onPressed: onTap,
+                  ),
+                ),
               ],
             ),
           ],

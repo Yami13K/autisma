@@ -9,20 +9,18 @@ import 'package:autisma/screens/intro_screen.dart';
 import 'package:autisma/parents/upload.dart';
 import 'package:flutter/material.dart';
 
-
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-
         visualDensity: VisualDensity.adaptivePlatformDensity,
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
@@ -48,10 +46,10 @@ class MyApp extends StatelessWidget {
         'register': (_) => RegistrationScreen(),
         'memory': (_) => Home(),
         'mathmetical': (_) => GameScreen(),
-        'add_child':(_)=>AddChild(),
-        'add_games':(_)=>Games(),
-        'score':(_)=>Score(),
-        'upload':(_)=>Upload(),
+        'add_child': (_) => AddChild(),
+        'add_games': (_) => Games(),
+        'score': (_) => Score(),
+        'upload': (_) => Upload(),
       },
     );
   }

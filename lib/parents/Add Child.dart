@@ -27,7 +27,8 @@ class AddChild extends StatefulWidget {
 }
 
 class _AddChildState extends State<AddChild> {
-  late TextEditingController myController;
+  late TextEditingController myController = TextEditingController()..text = "";
+  late SharedPreferences prefs;
   @override
   void initState() {
     super.initState();
@@ -35,16 +36,30 @@ class _AddChildState extends State<AddChild> {
   }
 
   loadResult() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs = await SharedPreferences.getInstance();
     setState(() {
       result = (prefs.getString("result"))!;
       myController = TextEditingController()..text = result;
     });
   }
 
+  bool _isHidden = true;
+  void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
+
   late String child_name = "";
   late String password = "";
   final _formKey = GlobalKey<FormState>();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    prefs.remove('result');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,14 +91,6 @@ class _AddChildState extends State<AddChild> {
                   child: Column(
                     children: [
                       SizedBox(height: 65),
-                      Text(
-                        'Add Child',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 1.2),
-                      ),
                       Hero(
                         tag: 'logo',
                         child: Image.asset(
@@ -108,6 +115,7 @@ class _AddChildState extends State<AddChild> {
                       onSaved: (value) => setState(() => child_name = value!),
                       decoration: InputDecoration(
                         labelText: 'Enter Child Name',
+                        counterText: "",
                       ),
                       onChanged: (value) {
                         child_name = value;
@@ -119,6 +127,9 @@ class _AddChildState extends State<AddChild> {
                           return null;
                         }
                       }),
+                  SizedBox(
+                    height: 24.0,
+                  ),
                   TextFormField(
                     maxLength: 30,
                     enabled: false,
@@ -129,8 +140,14 @@ class _AddChildState extends State<AddChild> {
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Enter your password',
+                      suffix: InkWell(
+                        onTap: _togglePasswordView,
+                        child: Icon(
+                          _isHidden ? Icons.visibility : Icons.visibility_off,
+                        ),
+                      ),
                     ),
-                    obscureText: true,
+                    obscureText: _isHidden,
                     onChanged: (value) {
                       password = value;
                     },
@@ -154,18 +171,26 @@ class _AddChildState extends State<AddChild> {
               height: 55,
               width: double.infinity,
               child: RoundedButton(
-                title: 'Add Child',
-                color: Colors.lightBlue,
-                onpressed: () {
-                  final isValid = _formKey.currentState!.validate();
-                  if (!isValid)
-                    _formKey.currentState!.save();
-                  else
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Child Registered"),
-                    ));
-                },
-              ),
+                  title: 'Add Child',
+                  color: Colors.lightBlue,
+                  onpressed: myController.text != ""
+                      ? () {
+                          final isValid = _formKey.currentState!.validate();
+                          if (!isValid)
+                            _formKey.currentState!.save();
+                          else
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Child Registered"),
+                            ));
+                        }
+                      : () {
+                          final isValid = _formKey.currentState!.validate();
+                          if (!isValid) _formKey.currentState!.save();
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                                "Can't Register Child Without Getting The Detection Results"),
+                          ));
+                        }),
             ),
           ],
         ),
